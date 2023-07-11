@@ -1,33 +1,49 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text,Image, FlatList, Pressable, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, ScreenWrapper } from "~components";
 import { setAppLoader } from "~redux/slices/config";
-import { selectUserMeta, setIsLoggedIn, setUserMeta } from "~redux/slices/user";
+import { selectData, selectUserMeta, setIsLoggedIn, setUserMeta } from "~redux/slices/user";
 import styles from "./styles";
+import ScreenNames from "~routes/routes";
+import { height, width } from "~utills/Dimension";
 export default function Home({ navigation, route }) {
   const dispatch = useDispatch();
-  const userInfo = useSelector(selectUserMeta);
+ // const userInfo = useSelector(selectUserMeta);
+// const data=useSelector(selectData)
+// console.log(data);
+  const renderItem = ({ item }) => {
+    return (
+      <Pressable style={styles.flatview}>
+        <Image
+        style={styles.imagestyle}
+        source={{uri:item.url}}
+        />
+        <Text style={styles.flattitle}>{item.title}</Text>
+      </Pressable>
+    );
+  };
+
   return (
     <ScreenWrapper>
       <View style={styles.mainViewContainer}>
-        <Text style={styles.title}>HOME SCREEN</Text>
-        <Text style={styles.title}>{userInfo?.name}</Text>
-        <Text style={styles.title}>{userInfo?.email}</Text>
-
-        <Button
-          title={"Logout"}
-          onPress={() => {
-            dispatch(setAppLoader(true));
-            setTimeout(() => {
-              dispatch(setUserMeta(null));
-              dispatch(setIsLoggedIn(false));
-              dispatch(setAppLoader(false));
-
-            }, 600);
-          }}
+       
+        <FlatList
+          data={[]}
+          style={{flex:1,width:width(90)}}
+          renderItem={renderItem}
+          keyExtractor={({ index }) => index}
+          numColumns={2}
         />
       </View>
+      <TouchableOpacity
+          onPress={() => {
+            
+          }}
+          style={styles.floatbutton}
+        >
+          <Text style={styles.buttontext}>+</Text>
+        </TouchableOpacity>
     </ScreenWrapper>
   );
 }

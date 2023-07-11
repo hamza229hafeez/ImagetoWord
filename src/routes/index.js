@@ -14,15 +14,9 @@ export default function Routes() {
   return (
     <NavigationContainer>
       <Loader />
-      {!isLogin ? (
-        <Stack.Navigator initialRouteName={ScreenNames.LOGIN} screenOptions={{ header: () => false }}>
-          <Stack.Screen name={ScreenNames.LOGIN} component={LoginScreen} />
-        </Stack.Navigator>
-      ) : (
         <Stack.Navigator initialRouteName={ScreenNames.HOME} screenOptions={{ header: () => false }}>
           <Stack.Screen name={ScreenNames.HOME} component={HomeScreen} />
         </Stack.Navigator>
-      )}
     </NavigationContainer>
   );
 }
